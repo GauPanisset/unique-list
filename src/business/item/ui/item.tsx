@@ -48,7 +48,7 @@ const Item: React.FunctionComponent<Props> = ({
     <Card className="flex w-full flex-row items-center justify-between p-4">
       <CardHeader className="min-w-0 flex-auto p-0">
         <CardTitle className="truncate text-base">
-          {description ?? 'Elément sans description'}
+          {description || 'Elément sans description'}
         </CardTitle>
         <CardDescription>
           Ajouter le {new Date(createdAt).toLocaleString('fr')}
