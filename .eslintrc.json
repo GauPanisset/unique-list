@@ -5,6 +5,14 @@
     "prettier/prettier": ["error"],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error"
+  },
+  "settings": {
+    "tailwindcss": {
+      /**
+       * Shadcn/ui uses the class `destructive` as `group` selector to style children components.
+       * See more in `toastVariants` @/ui/toast.tsx.
+       */
+      "whitelist": ["destructive"]
+    }
   }
 }
-
