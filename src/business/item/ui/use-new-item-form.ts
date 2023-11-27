@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useToast } from '@/technical/ui/use-toast';
@@ -13,6 +13,8 @@ type Props = {
 };
 
 const useNewItemForm = ({ listId }: Props) => {
+  const [open, setOpen] = useState(false);
+
   const router = useRouter();
   const form = useForm<ItemFormData>({
     resolver: zodResolver(itemSchema),
@@ -33,6 +35,7 @@ const useNewItemForm = ({ listId }: Props) => {
     try {
       await addItem(listId, { name, description });
       form.reset();
+      setOpen(false);
       toast({
         title: `"${name}" a été ajouté avec succès.`,
       });
@@ -45,7 +48,7 @@ const useNewItemForm = ({ listId }: Props) => {
     }
   };
 
-  return { form, onSubmit };
+  return { form, open, onSubmit, setOpen };
 };
 
 export { useNewItemForm };

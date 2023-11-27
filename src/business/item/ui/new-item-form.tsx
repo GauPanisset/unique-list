@@ -5,7 +5,6 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/technical/ui/button';
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -30,10 +29,10 @@ type Props = {
 };
 
 const NewItemForm: React.FunctionComponent<Props> = ({ listId }) => {
-  const { form, onSubmit } = useNewItemForm({ listId });
+  const { form, open, onSubmit, setOpen } = useNewItemForm({ listId });
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
           <span className="hidden sm:block">Ajouter un élément</span>{' '}
@@ -91,9 +90,7 @@ const NewItemForm: React.FunctionComponent<Props> = ({ listId }) => {
               >
                 Effacer
               </Button>
-              <DialogClose asChild>
-                <Button type="submit">Ajouter</Button>
-              </DialogClose>
+              <Button type="submit">Ajouter</Button>
             </DialogFooter>
           </form>
         </Form>
