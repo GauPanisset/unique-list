@@ -23,14 +23,14 @@ import {
 } from '@/technical/ui/form';
 import { Input } from '@/technical/ui/input';
 
-import { useItemForm } from './use-new-item-form';
+import { useNewItemForm } from './use-new-item-form';
 
 type Props = {
   listId: string;
 };
 
 const NewItemForm: React.FunctionComponent<Props> = ({ listId }) => {
-  const { form, onSubmit } = useItemForm({ listId });
+  const { form, onSubmit } = useNewItemForm({ listId });
 
   return (
     <Dialog>
