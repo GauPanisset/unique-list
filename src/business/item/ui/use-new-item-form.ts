@@ -7,7 +7,6 @@ import { useToast } from '@/technical/ui/use-toast';
 
 import { ItemFormData, itemSchema } from '../model';
 import { addItem } from '../services/add-item';
-import { checkItem } from '../services/check-item';
 
 type Props = {
   listId: string;
@@ -32,22 +31,17 @@ const useNewItemForm = ({ listId }: Props) => {
 
   const onSubmit = async ({ name, description }: ItemFormData) => {
     try {
-      const itemId = await checkItem(listId, name);
-
-      if (itemId === null) {
-        await addItem(listId, { name, description });
-        form.reset();
-        toast({
-          title: `"${name}" a été ajouté avec succès.`,
-        });
-      } else {
-        toast({
-          variant: 'destructive',
-          title: `"${name}" est déjà dans la liste.`,
-        });
-      }
+      await addItem(listId, { name, description });
+      form.reset();
+      toast({
+        title: `"${name}" a été ajouté avec succès.`,
+      });
     } catch (error) {
       console.error(error);
+      toast({
+        variant: 'destructive',
+        title: `"${name}" est déjà dans la liste.`,
+      });
     }
   };
 

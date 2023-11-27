@@ -4,7 +4,9 @@ import { revalidatePath } from 'next/cache';
 
 import { supabase } from '@/technical/db';
 
-import { encryptItem } from './encrypt-item';
+import { checkItem } from './check-item';
+import { encryptItemName } from './encrypt-item-name';
+import { sanitizeItemName } from './sanitize-item-name';
 
 const addItem = async (
   listId: string,
@@ -12,9 +14,23 @@ const addItem = async (
 ) => {
   const { name, description } = input;
 
+  const sanitizedName = sanitizeItemName(name);
+
+  const canAddItem = await checkItem(listId, sanitizedName);
+
+  if (canAddItem !== null) {
+    throw new Error(
+      `Can not add the item with name: '${name}' since it already exists in the list`
+    );
+  }
+
   const { data, error } = await supabase
     .from('items')
-    .insert({ name: encryptItem(name), description, list_id: listId })
+    .insert({
+      name: encryptItemName(sanitizedName),
+      description,
+      list_id: listId,
+    })
     .select('id');
 
   if (error) {

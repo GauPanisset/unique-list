@@ -4,8 +4,8 @@ import bcrypt from 'bcrypt';
 
 const SALT = 10;
 
-const encryptItem = (name: string) => {
+const encryptItemName = (name: string) => {
   return bcrypt.hashSync(name, SALT);
 };
 
-export { encryptItem };
+export { encryptItemName };
